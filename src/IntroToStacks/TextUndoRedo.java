@@ -66,7 +66,9 @@ public class TextUndoRedo implements KeyListener {
 		
 		if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE){
 			if(!stak.isEmpty()) {
-			stak.pop();
+			
+			//label.setText(text);
+			//index--;
 			}
 		}
 		else {
