@@ -1,6 +1,8 @@
 package IntroToStacks;
 
 import java.awt.RenderingHints.Key;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Stack;
@@ -8,10 +10,11 @@ import java.util.Stack;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.xml.crypto.dsig.keyinfo.KeyValue;
 
-public class TextUndoRedo implements KeyListener {
+public class TextUndoRedo implements KeyListener, ActionListener {
 	/* 
 	 * Create a JFrame with a JPanel and a JLabel.
 	 * 
@@ -26,6 +29,7 @@ public class TextUndoRedo implements KeyListener {
 	 * */
 	Stack<String> stak = new Stack<String>();
 	Stack<String> stakFinal = new Stack<String>();
+	Stack<String> undo = new Stack<String>();
 	public static void main(String[] args) {
 		TextUndoRedo t = new TextUndoRedo();
 		t.buildGUI();
@@ -34,9 +38,11 @@ public class TextUndoRedo implements KeyListener {
 	}
 	int index = 0;
 	String text = "";
+	String tex = "";
 	JPanel panel;
 	JFrame frame;
 	JLabel label;
+	JButton button;
 	public void buildGUI() {
 		frame = new JFrame();
 		panel = new JPanel();
@@ -67,22 +73,46 @@ public class TextUndoRedo implements KeyListener {
 		if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE){
 			if(!stak.isEmpty()) {
 			
-			//label.setText(text);
-			//index--;
+			
+			undo.add(stak.pop());
+			text = "";
+			for(int i = 0; i < stak.size(); i++) {
+			
+			text = text + stak.get(i);
+			
+			}
+			
+			label.setText(text);
+			
+			index--;
+			
 			}
 		}
 		else {
-			
+			if(e.getKeyCode() == KeyEvent.VK_1) {
+				text = text + undo.pop();
+				label.setText(text);
+			}
+			else {
 			stak.push(""+e.getKeyChar());
 			text = text + stak.get(index);
 			label.setText(text);
 			index++;
 		}
+		}
+		
+		
 		
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 		
 	}
 }
